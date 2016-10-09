@@ -54,16 +54,30 @@ post '/bot' do
   msgin = params[:Body]
 
   case msgin
-  when /[Tt]ell.*joke/
-   msgout = "Zombies like brains... oh wait, that's not a joke... that's a warning"
-  when /joke/
+  when Regexp.new("tell.*joke", Regexp::IGNORECASE)
+   jokes = ["Zombies like brains... oh wait, that's not a joke... that's a warning",
+   			"Whats a zombies favorite food? Man-gos!",
+   			"It must be hard for dna, all cramoed up in there wondering Does this jean make my but look fat?"
+   		]
+   msgout = jokes.sample
+  when Regexp.new("joke", Regexp::IGNORECASE)
    msgout = "Yo Momma"
+  when Regexp.new("yo", Regexp::IGNORECASE)
+   msgout = "Yo... who? Yo Momma"
   when /[Aa]ri/
-   msgout = "Yep"
+   msgout = "Yep, you guessed it"
   when Regexp.new("ab.*c", Regexp::IGNORECASE)
    msgout = "d...e...f"
+  when Regexp.new("what color ['are''is']", Regexp::IGNORECASE)
+  	msgout = "0xAAAA05"
+  when Regexp.new("how are .* made", Regexp::IGNORECASE)
+  	msgout = 'With 1 and 0 and alot of star dust'
+  when Regexo.new('do you.* love me')
+  	msgout = "Why yes, of course"
+  when Regexo.new('love')  	
+  	msgout = "L = 8 + .5Y - .2P + .9Hm + .3Mf + J - .3G - .5(Sm - Sf)2 + I + 1.5C"
   else 
-   msgout = "Thanks for your message: " + msgin 
+   msgout = msgin + " Does not compute." 
   end
 
   client.account.sms.messages.create(
