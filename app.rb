@@ -47,9 +47,11 @@ post '/call' do
 end
 
 post '/bot' do
+  # {"ToCountry"=>"US", "ToState"=>"AL", "SmsMessageSid"=>"SMd89fb0d41c6fe0ea29a752d4eec7a36e", "NumMedia"=>"0", "ToCity"=>"ATHENS", "FromZip"=>"10010", "SmsSid"=>"SMd89fb0d41c6fe0ea29a752d4eec7a36e", "FromState"=>"NY", "SmsStatus"=>"received", "FromCity"=>"NEW YORK", "Body"=>"Again", "FromCountry"=>"US", "To"=>"+12569989418", "ToZip"=>"35611", "NumSegments"=>"1", "MessageSid"=>"SMd89fb0d41c6fe0ea29a752d4eec7a36e", "AccountSid"=>"ACdc4c43e886f4707e22faf156f843db02", "From"=>"+19175932024", "ApiVersion"=>"2010-04-01"}
+
   puts params.inspect
 
-  msgin = params[:body]
+  msgin = params[:Body]
 
   case msgin
   when /joke/
@@ -64,10 +66,9 @@ post '/bot' do
 
   client.account.sms.messages.create(
     :from => TWILIO_NUMBER,
-    :to => params[:from],
+    :to => params[:From],
     :body => msgout
   )
-
 
 end
 
