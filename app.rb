@@ -4,9 +4,9 @@ require 'twilio-ruby'
 
 # Load configuration from system environment variables - see the README for more
 # on these variables.
-TWILIO_ACCOUNT_SID = ENV['TWILIO_ACCOUNT_SID']
-TWILIO_AUTH_TOKEN = ENV['TWILIO_AUTH_TOKEN']
-TWILIO_NUMBER = ENV['TWILIO_NUMBER']
+TWILIO_ACCOUNT_SID = ENV['TWILIO_ACCOUNT_SID'] || "ACdc4c43e886f4707e22faf156f843db02"
+TWILIO_AUTH_TOKEN = ENV['TWILIO_AUTH_TOKEN'] || "3dfbd55ed218936d816e58f127a7ac52"
+TWILIO_NUMBER = ENV['TWILIO_NUMBER'] || "2569989418"
 
 set :bind, '0.0.0.0'
 set :port, ENV['TWILIO_STARTER_RUBY_PORT'] || 4567
@@ -26,7 +26,7 @@ post '/message' do
   client.account.sms.messages.create(
     :from => TWILIO_NUMBER,
     :to => params[:to],
-    :body => 'Good luck on your Twilio quest!'
+    :body => 'DOH!'
   )
 
   # Send back a message indicating the text is inbound
