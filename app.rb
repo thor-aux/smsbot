@@ -46,6 +46,10 @@ post '/call' do
   'Call is inbound!'
 end
 
+post '/bot' do
+  puts params.inspect
+end
+
 # Render a TwiML document that will say a message back to the user
 get '/hello' do
   # Build a TwiML response
