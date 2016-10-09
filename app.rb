@@ -97,6 +97,8 @@ post '/bot' do
    msgout = "Yep, you guessed it"
   when Regexp.new("what color ['are''is']", Regexp::IGNORECASE)
   	msgout = "0xAAAA05"
+  when Regexp.new("['hi''hey''hello']", Regexp::IGNORECASE)
+  	msgout = 'Oh. Hai!'
   when Regexp.new("how are .* made", Regexp::IGNORECASE)
   	msgout = 'With 1 and 0 and alot of star dust'
   when Regexp.new('do you.* love me', Regexp::IGNORECASE)
