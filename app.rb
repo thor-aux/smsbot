@@ -1,6 +1,8 @@
 require 'rubygems'
 require 'sinatra'
 require 'twilio-ruby'
+require 'wikipedia'
+require 'open_weather'
 
 # Load configuration from system environment variables - see the README for more
 # on these variables.
@@ -20,13 +22,38 @@ get '/' do
   erb :index
 end
 
+def get_weather
+  w = "Can't get the weather"
+  begin 
+    opt = {APPID: "27dd4460f275a2d19a413aa654e31a7b"}
+    city = params['FromCity'] || "Huntsville"
+    state = params['FromState'] || "AL"
+    cityandstate = "#{city}, #{state}"
+    o = OpenWeather::Forecast.city(cityandstate, opt)
+    w = "Weather in #{cityandstate} is " + o.dig('list', 0, 'weather', 0, 'description')
+  rescue Exception => e  
+    puts "ERROR: Can't get the weather. Message = " + e.inspect
+  end
+  w
+end
+
+get '/weather' do
+  x = get_weather
+  x.inspect
+end
+
+get '/wiki' do
+  contents = Wikipedia.find("Ari")
+  contents.inspect
+end
+
 # Handle a form POST to send a message
 post '/message' do
   # Use the REST API client to send a text message
   client.account.sms.messages.create(
     :from => TWILIO_NUMBER,
     :to => params[:to],
-    :body => 'DOH!'
+    :body => 'DOH'
   )
 
   # Send back a message indicating the text is inbound
@@ -72,10 +99,12 @@ post '/bot' do
   	msgout = "0xAAAA05"
   when Regexp.new("how are .* made", Regexp::IGNORECASE)
   	msgout = 'With 1 and 0 and alot of star dust'
-  when Regexp.new('do you.* love me')
+  when Regexp.new('do you.* love me', Regexp::IGNORECASE)
   	msgout = "Why yes, of course"
-  when Regexp.new('love')  	
+  when Regexp.new('love', Regexp::IGNORECASE)  	
   	msgout = "L = 8 + .5Y - .2P + .9Hm + .3Mf + J - .3G - .5(Sm - Sf)2 + I + 1.5C"
+  when Regexp.new('weather', Regexp::IGNORECASE)  	
+  	msgout = get_weather
   else 
    msgout = msgin + " Does not compute." 
   end

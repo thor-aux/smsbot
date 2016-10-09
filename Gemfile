@@ -1,8 +1,9 @@
 source 'https://rubygems.org'
-ruby "2.3.1"
+ruby "2.3.0"
 
-
-gem 'twilio-ruby'
 gem 'sinatra'
 gem 'sinatra-contrib'
 gem 'rack-flash3'
+gem 'wikipedia-client'
+gem 'twilio-ruby'
+gem 'open-weather'
