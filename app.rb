@@ -54,12 +54,14 @@ post '/bot' do
   msgin = params[:Body]
 
   case msgin
+  when /[Tt]ell.*joke/
+   msgout = "Zombies like brains... oh wait, that's not a joke... that's a warning"
   when /joke/
    msgout = "Yo Momma"
-  when /tell.*joke/
-   msgout = "Zombies like brains... oh wait, that's not a joke... that's a warning"
   when /[Aa]ri/
    msgout = "Yep"
+  when Regexp.new("ab.*c", Regexp::IGNORECASE)
+   msgout = "d...e...f"
   else 
    msgout = "Thanks for your message: " + msgin 
   end
