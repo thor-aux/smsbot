@@ -48,6 +48,27 @@ end
 
 post '/bot' do
   puts params.inspect
+
+  msgin = params[:body]
+
+  case msgin
+  when /joke/
+   msgout = "Yo Momma"
+  when /tell.*joke/
+   msgout = "Zombies like brains... oh wait, that's not a joke... that's a warning"
+  when /[Aa]ri/
+   msgout = "Yep"
+  else 
+   msgout = "Thanks for your message: " + msgin 
+  end
+
+  client.account.sms.messages.create(
+    :from => TWILIO_NUMBER,
+    :to => params[:from],
+    :body => msgout
+  )
+
+
 end
 
 # Render a TwiML document that will say a message back to the user
